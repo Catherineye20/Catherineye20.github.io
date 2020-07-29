@@ -1,0 +1,58 @@
+/* AXES */
+/* ticks */
+.axis line {
+    stroke: #706f6f;
+    stroke-width: 0.5;
+    shape-rendering: crispEdges;
+}
+
+/* axis contour */
+.axis path {
+    stroke: #706f6f;
+    stroke-width: 0.7;
+    shape-rendering: crispEdges;
+}
+
+/* axis text */
+.axis text {
+    fill: #2b2929;
+    font-family: Georgia;
+    font-size: 120%;
+}
+
+.line_label {
+    font-family: Georgia;
+    font-size: 75%;
+}
+
+.dot_label {
+    font-family: Georgia;
+    font-size: 75%;
+}
+
+.legend {
+    font-family: Georgia;
+    font-size: 75%;
+    text-anchor: start;
+}
+.legend_rect {
+    fill: white;
+    stroke: black;
+    stroke-width: 0.9;
+    fill-opacity: 0;
+}
+
+.annotation_label {
+    fill: black;
+    font-family: Georgia;
+    font-size: 65%;
+    text-anchor: end;
+}
+
+.annotation {
+    stroke: black;
+    stroke-width: 0.8;
+    stroke-dasharray: 5,5;
+}
+
+
