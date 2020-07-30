@@ -55,4 +55,13 @@
     stroke-dasharray: 5,5;
 }
 
-
+#selectButton {
+    background-color: rgb(105, 104, 106);
+    border: 1px;
+    color: white;
+    padding: 5px 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    font-family: "Arial Rounded MT Bold";
+}

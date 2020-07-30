@@ -61,8 +61,8 @@
 	});
 	// set the dimensions and margins of the graph
 	const margin = {top: 50, right: 500, bottom: 50, left: 25},
-			width = 1250 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom;
+			width = 1350 - margin.left - margin.right,
+			height = 550 - margin.top - margin.bottom;
 
 	// append the svg object to the body of the page
 	var svg = d3.select("#my_dataviz")
@@ -113,7 +113,7 @@
 		// A color scale: one color for each group
 		var myColor = d3.scaleOrdinal()
 				.domain(data.columns.slice(1))
-				.range(["#54b7b1", "#e3897f", "#d6c33d", "#f2a283", "#AAB75B", "#4886a7", "#b375b7", "#9e7ab7", "#4eb77a", "#F2D75E", "#e17d88", "#5ab7a5"]);
+				.range(["#54b7b1", "#f3935c", "#d6c33d", "#eeb096", "#AAB75B", "#4886a7", "#b375b7", "#9e7ab7", "#4eb77a", "#F2D75E", "#e17d88", "#5ab7a5"]);
 
 		// Add X axis --> it is a date format
 		var x = d3.scaleTime()
@@ -280,7 +280,6 @@
 
 			// What are the selected boundaries?
 			var extent = d3.event.selection;
-
 			// If no selection, back to initial coordinate. Otherwise, update X axis domain
 			if (!extent) {
 				if (!idleTimeout) {
@@ -467,14 +466,12 @@
 			function moved() {
 				d3.event.preventDefault();
 				const mouse = d3.mouse(this);
-				const xm = x.invert(mouse[0]-margin.left);
-				const ym = y.invert(mouse[1]-margin.top);
-				console.log("mouse: "+mouse + " xm "+xm+" ym "+ym);
+				const xm = x.invert(mouse[0]);
+				const ym = y.invert(mouse[1]);
 				const i1 = d3.bisectLeft(data.dates, xm, 1);
 				const i0 = i1 - 1;
 				const i = xm - data.dates[i0] > data.dates[i1] - xm ? i1 : i0;
 				const s = d3.least(selectedData, d => Math.abs(d.values[i].rate - ym));
-				console.log("i: " + i);
 				path.attr("stroke", d => d === s ? myColor(s.column) : "#ddd").filter(d => d === s).raise();
 				dot.selectAll("text").remove();
 				dot.attr("transform", `translate(${x(data.dates[i])},${y(s.values[i].rate)})`)
