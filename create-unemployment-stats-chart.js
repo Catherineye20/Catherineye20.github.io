@@ -1,4 +1,4 @@
-function createUnemploymentChart (data) {
+function createUnemploymentChart(data) {
 
     // List of groups
     const allGroups = ["---", "Education", "Race", "Sex"];

@@ -35,6 +35,7 @@
     font-size: 35%;
     text-anchor: start;
 }
+
 .legend_rect {
     fill: white;
     stroke: white;
@@ -52,16 +53,16 @@
 .annotation {
     stroke: white;
     stroke-width: 1.5;
-    stroke-dasharray: 5,5;
+    stroke-dasharray: 5, 5;
 }
 
-#selectButton {
-    background-color: rgb(105, 104, 106);
+.button {
+    background-color: white;
     border: 1px;
-    color: white;
+    color: black;
     padding: 5px 4px;
     text-align: center;
     display: inline-block;
-    font-size: 14px;
-    font-family: "Arial Rounded MT Bold";
+    font-size: 16px;
+    font-family: sans-serif;
 }
