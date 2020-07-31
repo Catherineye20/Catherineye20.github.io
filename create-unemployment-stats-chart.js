@@ -156,24 +156,24 @@ function createUnemploymentChart(data) {
     // Add the legend
     svg.append("circle")
         .attr("class", "dots")
-        .attr("cx", margin.left + width + 22)
-        .attr("cy", margin.top + 4)
+        .attr("cx", margin.left + width + 72)
+        .attr("cy", margin.top + 14)
         .attr("r", 4)
         .style("fill", myColor("16 years and over"));
 
     svg.append("text")
         .attr("class", "legend")
-        .attr("x", margin.left + width + 30)
-        .attr("y", margin.top + 6)
+        .attr("x", margin.left + width + 80)
+        .attr("y", margin.top + 16)
         .text("16 years and over")
         .style("alignment-baseline", "middle")
         .style("fill", myColor("16 years and over"));
 
     svg.append("rect")
         .attr("class", "legend_rect")
-        .attr("x", margin.left + width + 12)
-        .attr("y", margin.top - 12)
-        .attr("width", 142)
+        .attr("x", margin.left + width + 62)
+        .attr("y", margin.top - 2)
+        .attr("width", 141)
         .attr("height", 28);
 
     svg.call(hover, path, selectedData);
@@ -308,36 +308,36 @@ function createUnemploymentChart(data) {
             .enter();
         dots.append("circle")
             .attr("class", "dots")
-            .attr("cx", margin.left + width + 22)
+            .attr("cx", margin.left + width + 72)
             .attr("cy", function (d, i) {
-                return margin.top + 4 + i * 20
-            }) // 100 is where the first dot appears. 25 is the distance between dots
+                return margin.top + 14 + i * 20
+            })
             .attr("r", 4)
             .style("fill", d => myColor(d.column));
 
         dots.append("text")
             .attr("class", "legend")
-            .attr("x", margin.left + width + 30)
+            .attr("x", margin.left + width + 80)
             .attr("y", function (d, i) {
-                return margin.top + 6 + i * 20
-            }) // 100 is where the first dot appears. 25 is the distance between dots
+                return margin.top + 16 + i * 20
+            })
             .text(d => d.column)
             .style("alignment-baseline", "middle")
             .style("fill", d => myColor(d.column));
 
         dots.append("rect")
             .attr("class", "legend_rect")
-            .attr("x", margin.left + width + 12)
-            .attr("y", margin.top - 12)
+            .attr("x", margin.left + width + 62)
+            .attr("y", margin.top - 2)
             .attr("width", function (d) {
                 if (selectedOption === "---")
-                    return 142;
+                    return 141;
                 else if (selectedOption === "Education")
-                    return 375;
+                    return 373;
                 else if (selectedOption === "Race")
-                    return 327;
+                    return 324;
                 else
-                    return 210;
+                    return 208;
             }).attr("height", function (d) {
             if (selectedOption === "---")
                 return 28;
@@ -403,13 +403,13 @@ function createUnemploymentChart(data) {
                 .attr("class", "dot_label")
                 .attr("dy", "0em")
                 .attr("x", 4)
-                .attr("y", -18)
+                .attr("y", -22)
                 .text(formatDate(data.dates[i]));
             dot.append("text")
                 .attr("class", "dot_label")
                 .attr("dy", "1em")
                 .attr("x", 4)
-                .attr("y", -18)
+                .attr("y", -22)
                 .text(s.values[i].rate);
         }
 

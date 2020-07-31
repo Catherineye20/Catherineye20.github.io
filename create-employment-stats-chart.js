@@ -112,42 +112,19 @@ function createEmploymentChart(data) {
         .attr("class", "brush")
         .call(brush);
 
-    function findMaxDecrData(data) {
-        var values = data.values.map(d => parseFloat(d.population));
-        var maxDecr = 0;
-        var maxDecrIndex = 0;
-        values.forEach((d, i) => {
-            if (i > 0 && values[i - 1] - d > maxDecr) {
-                maxDecr = values[i - 1] - d;
-                maxDecrIndex = i;
-            }
-        });
-        return [data.values[maxDecrIndex].date, data.values[maxDecrIndex].population];
-    }
-
-    var maxDecrData = findMaxDecrData(selectedData[0]);
-
     // Add the annotation
     svg1.append("line")
         .attr("class", "annotation")
-        .attr("x1", x(maxDecrData[0]))
-        .attr("y1", y(maxDecrData[1]))
-        .attr("x2", x(maxDecrData[0]) - 35)
-        .attr("y2", y(maxDecrData[1]) + 35);
+        .attr("x1", x(parseDate("Apr-2020")))
+        .attr("y1", margin.top + height)
+        .attr("x2", x(parseDate("Apr-2020")))
+        .attr("y2", margin.top);
 
     svg1.append("text")
         .attr("class", "annotation_label")
-        .attr("dy", "0em")
-        .attr("x", x(maxDecrData[0]) - 38)
-        .attr("y", y(maxDecrData[1]) + 38)
-        .text(formatDate(maxDecrData[0]));
-
-    svg1.append("text")
-        .attr("class", "annotation_label")
-        .attr("dy", "0.75em")
-        .attr("x", x(maxDecrData[0]) - 38)
-        .attr("y", y(maxDecrData[1]) + 38)
-        .text(maxDecrData[1]);
+        .attr("x", x(parseDate("Apr-2020")) + 24)
+        .attr("y", margin.top - 4)
+        .text("Apr-2020");
 
     // Add the legend
     var dots = svg1.selectAll("dots")
@@ -155,19 +132,19 @@ function createEmploymentChart(data) {
         .enter();
     dots.append("circle")
         .attr("class", "dots")
-        .attr("cx", margin.left + width + 244)
+        .attr("cx", margin.left + width + 246)
         .attr("cy", function (d, i) {
-            return margin.top + 22 + i * 20
-        }) // 100 is where the first dot appears. 25 is the distance between dots
+            return margin.top + 18 + i * 20
+        })
         .attr("r", 4)
         .style("fill", d => myColor(d));
 
     dots.append("text")
         .attr("class", "legend")
-        .attr("x", margin.left + width + 252)
+        .attr("x", margin.left + width + 254)
         .attr("y", function (d, i) {
-            return margin.top + 24 + i * 20
-        }) // 100 is where the first dot appears. 25 is the distance between dots
+            return margin.top + 20 + i * 20
+        })
         .text(d => d)
         .style("alignment-baseline", "middle")
         .style("fill", d => myColor(d));
@@ -175,9 +152,9 @@ function createEmploymentChart(data) {
     dots.append("rect")
         .attr("class", "legend_rect")
         .attr("x", margin.left + width + 235)
-        .attr("y", margin.top + 8)
+        .attr("y", margin.top + 2)
         .attr("width", 250)
-        .attr("height", 225);
+        .attr("height", 228);
 
     svg1.call(hover, path, selectedData);
 
@@ -232,8 +209,6 @@ function createEmploymentChart(data) {
         resetChart();
         d3.selectAll(".lines").remove();
         d3.selectAll(".line_label").remove();
-        d3.selectAll(".annotation").remove();
-        d3.selectAll(".annotation_label").remove();
 
         var selectedChoices = [];
         d3.selectAll(".checkbox").each(function (d) {
@@ -262,7 +237,7 @@ function createEmploymentChart(data) {
             minY = d3.min(data.values.map(d => d3.min(d)));
             maxY = d3.max(data.values.map(d => d3.max(d)));
         }
-        console.log("minY " + minY + " maxY " + maxY);
+
         // Update Y axis
         y.domain([minY, maxY]).nice();
         yAxis.transition().call(d3.axisLeft(y));
@@ -297,29 +272,6 @@ function createEmploymentChart(data) {
             .attr("x", 3)
             .text(d => d.column)
             .attr("fill", d => myColor(d.column));
-
-        // Add the annotation
-        lines = lines.datum(d => findMaxDecrData(d));
-        lines.append("line")
-            .attr("class", "annotation")
-            .attr("x1", d => x(d[0]))
-            .attr("y1", d => y(d[1]))
-            .attr("x2", d => x(d[0]) - 35)
-            .attr("y2", d => y(d[1]) + 35);
-
-        lines.append("text")
-            .attr("class", "annotation_label")
-            .attr("dy", "0em")
-            .attr("x", d => x(d[0]) - 38)
-            .attr("y", d => y(d[1]) + 38)
-            .text(d => formatDate(d[0]));
-
-        lines.append("text")
-            .attr("class", "annotation_label")
-            .attr("dy", "0.75em")
-            .attr("x", d => x(d[0]) - 38)
-            .attr("y", d => y(d[1]) + 38)
-            .text(d => d[1]);
 
         // Add the brushing
         clip.append("g")
@@ -372,13 +324,13 @@ function createEmploymentChart(data) {
                 .attr("class", "dot_label")
                 .attr("dy", "0em")
                 .attr("x", 4)
-                .attr("y", -18)
+                .attr("y", -22)
                 .text(formatDate(data.dates[i]));
             dot.append("text")
                 .attr("class", "dot_label")
                 .attr("dy", "1em")
                 .attr("x", 4)
-                .attr("y", -18)
+                .attr("y", -22)
                 .text(s.values[i].population);
         }
 
