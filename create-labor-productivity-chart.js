@@ -43,9 +43,11 @@ function createLaborProductivityChart(data) {
         .call(d3.axisBottom(x));
     data.dates.pop();
 
+    var minY = d3.min(data.values.map(d => d3.min(d)));
+    var maxY = d3.max(data.values.map(d => d3.max(d)));
     // Add Y axis
     var y = d3.scaleLinear()
-        .domain([d3.min(data.values.map(d => d3.min(d))), d3.max(data.values.map(d => d3.max(d)))])
+        .domain([minY, maxY])
         .nice()
         .range([margin.top + height, margin.top]);
 
@@ -102,24 +104,40 @@ function createLaborProductivityChart(data) {
         .attr("transform", "translate(0," + y(0) + ")")
         .call(d3.axisTop(center).ticks(0));
 
+    // Add the annotation
+    svg2.append("g").append("rect")
+        .attr("x", x(data.dates[data.dates.length - 1]) + 2)
+        .attr("y", y(maxY))
+        .attr("width", 12)
+        .attr("height", Math.abs(y(Math.ceil(minY) - 0.5) - y(Math.floor(maxY) + 1)))
+        .style("fill", "#c8c8c8")
+        .style("opacity", 0.5);
+
+    svg2.append("g").append("text")
+        .attr("class", "dot_label")
+        .attr("x", x(data.dates[data.dates.length - 1]) - 16)
+        .attr("y", y(maxY) - 8)
+        .text("Qtr1-2020")
+        .style('fill', "#c8c8c8");
+
     // Add the legend
     var dots = svg2.selectAll("dots")
         .data(data.columns.slice(1))
         .enter();
     dots.append("circle")
         .attr("class", "dots")
-        .attr("cx", margin.left + width + 46)
+        .attr("cx", margin.left + width + 76)
         .attr("cy", function (d, i) {
-            return margin.top + 18 + i * 20
+            return margin.top + 22 + i * 20
         })
         .attr("r", 4)
         .style("fill", d => myColor(d));
 
     dots.append("text")
         .attr("class", "legend")
-        .attr("x", margin.left + width + 54)
+        .attr("x", margin.left + width + 84)
         .attr("y", function (d, i) {
-            return margin.top + 20 + i * 20
+            return margin.top + 24 + i * 20
         })
         .text(d => d)
         .style("alignment-baseline", "middle")
@@ -127,8 +145,8 @@ function createLaborProductivityChart(data) {
 
     dots.append("rect")
         .attr("class", "legend_rect")
-        .attr("x", margin.left + width + 35)
-        .attr("y", margin.top + 2)
+        .attr("x", margin.left + width + 65)
+        .attr("y", margin.top + 6)
         .attr("width", 150)
         .attr("height", 70);
 
@@ -210,12 +228,16 @@ function createLaborProductivityChart(data) {
             if (xm - x(data.dates[i0]) <= 12 && ym >= y0 && ym <= y1) {
                 rect.attr("fill", (d, i) => i === i0 ? myColor(selectedData.column) : "#ddd")
                     .style("stroke", (d, i) => i === i0 ? myColorBorder(selectedData.column) : "#5b5b5b");
+                var dateStr = formatDate1(data.dates[i0]);
+                var parts = dateStr.split("-");
+                var qtr = (parseInt(parts[0]) + 2) / 3;
+                var qtrStr = "Qtr" + qtr + "-" + parts[1];
                 label.append("text")
                     .attr("class", "dot_label")
                     .attr("dy", "0em")
                     .attr("x", x(data.dates[i0]) - 4)
                     .attr("y", per < 0 ? y1 + 20 : y0 - 20)
-                    .text(formatDate(data.dates[i0]));
+                    .text(qtrStr);
                 label.append("text")
                     .attr("class", "dot_label")
                     .attr("dy", "1em")
