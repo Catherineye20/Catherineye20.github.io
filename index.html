@@ -1,466 +1,137 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <img src="https://news.sophos.com/wp-content/uploads/2020/03/shutterstock_1625951251.jpg"
+                 style="height: 450px; margin: 0 auto 2rem auto; background: transparent;">
+            <h3>How COVID-19 impacts U.S. Workers</h3>
+            <p style="font-size:32px;">
+            Data Source: <a href="https://www.bls.gov/">U.S. BUREAU OF LABOR STATISTICS</a>
+            </p>
+            <small>Created by Wenbo Ye</small>
+        </section>
+        <section>
+            <h4>U.S. Unemployment Statistics</h4>
+            <p>
+                <!-- Initialize a select button -->
+                <small>By Category <select id="selectButton" style="margin-left:20px"></select></small>
+            </p>
+            <!-- Create a div where the graph will take place -->
+            <div id="my_dataviz"></div>
+        </section>
+        <section>
+            <h4>U.S. Employment Statistics</h4>
+            <p>
+                <!-- Initialize checkboxes -->
+                <small>By Industry
+                    <input type="checkbox" id="checkbox1" class="checkbox" value="Total nonfarm"> <label
+                            for="checkbox1" style="margin-left:20px"></label><label class="checkbox_label"> Total nonfarm </label>
+                    <input type="checkbox" id="checkbox2" class="checkbox" value="Construction"> <label
+                            for="checkbox2" style="margin-left:10px"></label><label class="checkbox_label"> Construction </label>
+                    <input type="checkbox" id="checkbox3" class="checkbox" value="Education and health services"><label
+                            for="checkbox3" style="margin-left:10px"></label><label class="checkbox_label"> Education and health services </label> <br>
+                    <input type="checkbox" id="checkbox4" class="checkbox" value="Financial activities"> <label
+                            for="checkbox4" style="margin-left:10px"></label><label class="checkbox_label"> Financial activities </label>
+                    <input type="checkbox" id="checkbox5" class="checkbox" value="Government"> <label
+                            for="checkbox5" style="margin-left:10px"></label><label class="checkbox_label"> Government </label>
+                    <input type="checkbox" id="checkbox6" class="checkbox" value="Information"> <label
+                            for="checkbox6" style="margin-left:10px"></label><label class="checkbox_label"> Information </label>
+                    <input type="checkbox" id="checkbox7" class="checkbox" value="Leisure and hospitality"> <label
+                            for="checkbox7" style="margin-left:10px"></label><label class="checkbox_label"> Leisure and hospitality </label>
+                    <input type="checkbox" id="checkbox8" class="checkbox" value="Manufacturing"> <label
+                            for="checkbox8" style="margin-left:10px"></label><label class="checkbox_label"> Manufacturing </label> <br>
+                    <input type="checkbox" id="checkbox9" class="checkbox" value="Mining and logging"> <label
+                            for="checkbox9" style="margin-left:10px"></label><label class="checkbox_label"> Mining and logging </label>
+                    <input type="checkbox" id="checkbox10" class="checkbox" value="Professional and business services">
+                    <label for="checkbox10" style="margin-left:10px"></label><label class="checkbox_label"> Professional and business
+                        services </label>
+                    <input type="checkbox" id="checkbox11" class="checkbox" value="Other services"><label
+                            for="checkbox11" style="margin-left:10px"></label><label class="checkbox_label"> Other services</label>
+                </small>
+            </p>
+            <!-- Create a div where the graph will take place -->
+            <div id="my_dataviz1"></div>
+        </section>
+        <section><h4>U.S. Major Sector Productivity Statistics</h4>
+            <p>
+                <input type="range" class="slider" min="0" max="2" value="0" style="margin-left:73px"><br>
+                <small>By Sector<span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                                         style="margin-left:5px">Business</label>
+                    <span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                             style="margin-left:5px">Nonfarm Business</label>
+                    <span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                             style="margin-left:5px">Manufacturing</label>
+                </small>
+            </p>
+            <!-- Create a div where the graph will take place -->
+            <div id="my_dataviz2"></div>
+        </section>
+    </div>
+</div>
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
-
-<!-- Initialize a select button -->
-Categorized By
-<select id="selectButton"></select>
-
-<!-- Create a div where the graph will take place -->
-<div id="my_dataviz"></div>
 <!-- D3 formatting -->
-<link rel="stylesheet" href="d3formatting1.css">
-<!-- D3 Array -->
+<link rel="stylesheet" href="d3formatting.css">
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script src="create-unemployment-stats-chart.js"></script>
+<script src="create-employment-stats-chart.js"></script>
+<script src="create-labor-productivity-chart.js"></script>
 <script src="https://d3js.org/d3-array.v2.min.js"></script>
 <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
 
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
     // set the dimensions and margins of the graph
-    const margin = {top: 50, right: 400, bottom: 50, left: 50},
-        width = 1000 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    const margin = {top: 50, right: 500, bottom: 50, left: 55},
+        width = 1350 - margin.left - margin.right,
+        height = 550 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
-    // .append("g")
-    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var svg1 = d3.select("#my_dataviz1")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
+    var svg2 = d3.select("#my_dataviz2")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
 
     const parseDate = d3.timeParse("%b-%Y");
     const formatDate = d3.timeFormat("%b-%Y");
+    const parseDate1 = d3.timeParse("%m-%Y");
 
     //Read the data
-    d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/unemployment/unemployment_rate_reformat.csv", function (data) {
-
-        // List of groups
-        const allGroups = ["---", "Education", "Race", "Sex"];
-        // Map group to corresponding columns
-        const groupToColumns = {
-            "---": ["16 years and over"],
-            "Education": ["25 years and over - Less than a High School diploma", "25 years and over - High School graduates, no college", "25 years and over - Some college or associate degree", "25 years and over - Bachelor's degree and higher"],
-            "Race": ["16 years and over - Asian", "16 years and over - Black or African American", "16 years and over - Hispanic or Latino", "16 years and over - White"],
-            "Sex": ["20 years and over - Men", "20 years and over - Women"]
-        };
-
-        // add the options to the button
-        d3.select("#selectButton")
-            .selectAll('myOptions')
-            .data(allGroups)
-            .enter()
-            .append('option')
-            .text(d => d) // text showed in the menu
-            .attr("value", d => d); // corresponding value returned by the button
-
-        data.forEach(function (d) { // Make every date in the csv data a javascript date object format
-            d.date = parseDate(d.date);
-        });
-
-        data.dates = data.map(function (d) {
-            return d.date;
-        });
-        data.values = data.map(function (d) {
-            return data.columns.slice(1).map(function (c) {
-                return parseFloat(d[c]);
-            });
-        });
-
-        // A color scale: one color for each group
-        var myColor = d3.scaleOrdinal()
-            .domain(data.columns.slice(1))
-            .range(["#54b7b1", "#f3935c", "#d6c33d", "#eeb096", "#AAB75B", "#4886a7", "#b375b7", "#9e7ab7", "#4eb77a", "#F2D75E", "#e17d88", "#5ab7a5"]);
-
-        // Add X axis --> it is a date format
-        var x = d3.scaleTime()
-            .domain(d3.extent(data, d => d.date))
-            .range([margin.left, margin.left + width]);
-
-        var xAxis = svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + (margin.top + height) + ")")
-            .call(d3.axisBottom(x));
-
-        // Add Y axis
-        var y = d3.scaleLinear()
-            .domain([0, d3.max(data.values.map(d => d3.max(d)))])
-            .nice()
-            .range([margin.top + height, margin.top]);
-
-        svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(" + margin.left + ",0)")
-            .call(d3.axisLeft(y))
-            .append("text")
-            .attr("dy", ".75em")
-            .attr("x", 130)
-            .attr("y", 45)
-            .style("text-anchor", "end")
-            .text("Unemployment Rate %");
-
-        // Add a clipPath: everything out of this area won't be drawn.
-        svg.append("defs")
-            .append("svg:clipPath")
-            .attr("id", "clip")
-            .append("svg:rect")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("x", margin.left)
-            .attr("y", margin.top);
-
-        // Brushing function
-        var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
-            .extent([[margin.left, margin.top], [margin.left + width, margin.top + height]])  // initialise the brush area
-            .on("end", updateChart);               // Each time the brush selection changes, trigger the 'updateChart' function
-
-        // Line function
-        const line = d3.line()
-            .x(d => x(d.date))
-            .y(d => y(d.rate));
-
-        // Initialize line with group 16 years and over
-        var selectedData = [{
-            column: "16 years and over",
-            values: data.map(function (d) {
-                return {
-                    date: d.date,
-                    rate: d["16 years and over"]
-                };
-            })
-        }];
-
-        var clip = svg.append('g')
-            .attr("clip-path", "url(#clip)");
-
-        var path = clip.selectAll("lines")
-            .data(selectedData)
-            .enter()
-            .append("path")
-            .attr("class", "lines")
-            .attr("d", d => line(d.values))
-            .attr("stroke", myColor("16 years and over"))
-            .style("stroke-width", 2)
-            .style("fill", "none");
-
-        svg.append("text")
-            .attr("class", "line_label")
-            .attr("transform", "translate(" + (x(data[data.length - 1].date) + 4) + ","
-                + (y(data[data.length - 1]["16 years and over"]) + 5) + ")")
-            .attr("x", 5)
-            .text("16 years and over")
-            .attr("fill", myColor("16 years and over"));
-
-        // Add the brushing
-        clip.append("g")
-            .attr("class", "brush")
-            .call(brush);
-
-        function findMaxData(data) {
-            var values = data.values.reverse().map(d => parseFloat(d.rate));
-            var maxIndex = data.values.length - 1 - d3.maxIndex(values);
-            data.values.reverse();
-            return [data.values[maxIndex].date, data.values[maxIndex].rate];
-        }
-
-        var maxData = findMaxData(selectedData[0]);
-
-        // Add the annotation
-        svg.append("line")
-            .attr("class", "annotation")
-            .attr("x1", x(maxData[0]))
-            .attr("y1", y(maxData[1]))
-            .attr("x2", x(maxData[0]) - 25)
-            .attr("y2", y(maxData[1]) - 20);
-
-        svg.append("text")
-            .attr("class", "annotation_label")
-            .attr("dy", "0em")
-            .attr("x", x(maxData[0]) - 28)
-            .attr("y", y(maxData[1]) - 23)
-            .text(formatDate(maxData[0]));
-
-        svg.append("text")
-            .attr("class", "annotation_label")
-            .attr("dy", "0.75em")
-            .attr("x", x(maxData[0]) - 28)
-            .attr("y", y(maxData[1]) - 23)
-            .text(maxData[1]);
-
-        // Add the legend
-        svg.append("circle")
-            .attr("class", "dots")
-            .attr("cx", margin.left + width + 22)
-            .attr("cy", margin.top + 8)
-            .attr("r", 4)
-            .style("fill", myColor("16 years and over"));
-
-        svg.append("text")
-            .attr("class", "legend")
-            .attr("x", margin.left + width + 30)
-            .attr("y", margin.top + 10)
-            .text("16 years and over")
-            .style("alignment-baseline", "middle")
-            .style("fill", myColor("16 years and over"));
-
-        svg.append("rect")
-            .attr("class", "legend_rect")
-            .attr("x", margin.left + width + 12)
-            .attr("y", margin.top - 8)
-            .attr("width", 120)
-            .attr("height", 28);
-
-        svg.call(hover, path, selectedData);
-
-        // A function that set idleTimeOut to null
-        var idleTimeout;
-
-        function idled() {
-            idleTimeout = null;
-        }
-
-        function resetChart() {
-            x.domain(d3.extent(data, d => d.date));
-            xAxis.transition().call(d3.axisBottom(x));
-            path.transition()
-                .attr("d", d => line(d.values));
-            d3.selectAll(".line_label").transition().style("opacity", 1);
-            d3.selectAll(".annotation").transition().style("opacity", 1);
-            d3.selectAll(".annotation_label").transition().style("opacity", 1);
-        }
-
-        // If user double click, reinitialize the chart
-        svg.on("dblclick", resetChart);
-
-        // A function that update the chart for given boundaries
-        function updateChart() {
-
-            // What are the selected boundaries?
-            var extent = d3.event.selection;
-
-            // If no selection, back to initial coordinate. Otherwise, update X axis domain
-            if (!extent) {
-                if (!idleTimeout) {
-                    return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
-                }
-            } else {
-                x.domain([x.invert(extent[0]), x.invert(extent[1])]);
-                clip.select(".brush").call(brush.move, null); // This remove the grey brush area as soon as the selection has been done
-            }
-
-            // Update axis and line position
-            xAxis.transition().duration(1000).call(d3.axisBottom(x));
-            path.transition()
-                .duration(1000)
-                .attr("d", d => line(d.values));
-            d3.selectAll(".line_label").transition().duration(1000).style("opacity", 0);
-            d3.selectAll(".annotation").transition().duration(1000).style("opacity", 0);
-            d3.selectAll(".annotation_label").transition().duration(1000).style("opacity", 0);
-        }
-
-        // A function that update the chart
-        function update(selectedOption) {
-            resetChart();
-
-            const selectedColumns = groupToColumns[selectedOption];
-            selectedData = selectedColumns.map(function (c) {
-                return {
-                    column: c,
-                    values: data.map(function (d) {
-                        return {
-                            date: d.date,
-                            rate: d[c]
-                        };
-                    })
-                };
-            });
-
-            d3.selectAll(".lines").remove();
-            d3.selectAll(".line_label").remove();
-            d3.selectAll(".dots").remove();
-            d3.selectAll(".legend").remove();
-            d3.selectAll(".legend_rect").remove();
-            d3.selectAll(".annotation").remove();
-            d3.selectAll(".annotation_label").remove();
-
-            clip = svg.append('g')
-                .attr("clip-path", "url(#clip)");
-
-            path = clip.selectAll("lines")
-                .data(selectedData)
-                .enter()
-                .append("path")
-                .attr("class", "lines")
-                .attr("d", d => line(d.values))
-                .attr("stroke", d => myColor(d.column))
-                .style("stroke-width", 2)
-                .style("fill", "none");
-
-            var lines = svg.selectAll("lines")
-                .data(selectedData)
-                .enter();
-            lines.append("text")
-                .attr("class", "line_label")
-                .datum(function (d) {
-                    return {
-                        column: d.column,
-                        value: d.values[d.values.length - 1]
-                    };
-                })
-                .attr("transform", function (d) {
-                    return "translate(" + (x(d.value.date) + 4) + "," + (y(d.value.rate) + 5) + ")";
-                })
-                .attr("x", 5)
-                .text(d => d.column)
-                .attr("fill", d => myColor(d.column));
-
-            // Add the annotation
-            lines = lines.datum(d => findMaxData(d));
-            lines.append("line")
-                .attr("class", "annotation")
-                .attr("x1", d => x(d[0]))
-                .attr("y1", d => y(d[1]))
-                .attr("x2", d => x(d[0]) - 25)
-                .attr("y2", d => y(d[1]) - 20);
-
-            lines.append("text")
-                .attr("class", "annotation_label")
-                .attr("dy", "0em")
-                .attr("x", d => x(d[0]) - 28)
-                .attr("y", d => y(d[1]) - 23)
-                .text(d => formatDate(d[0]));
-
-            lines.append("text")
-                .attr("class", "annotation_label")
-                .attr("dy", "0.75em")
-                .attr("x", d => x(d[0]) - 28)
-                .attr("y", d => y(d[1]) - 23)
-                .text(d => d[1]);
-
-            // Add the legend
-            var dots = svg.selectAll("dots")
-                .data(selectedData)
-                .enter();
-            dots.append("circle")
-                .attr("class", "dots")
-                .attr("cx", margin.left + width + 22)
-                .attr("cy", function (d, i) {
-                    return margin.top + 8 + i * 20
-                }) // 100 is where the first dot appears. 25 is the distance between dots
-                .attr("r", 4)
-                .style("fill", d => myColor(d.column));
-
-            dots.append("text")
-                .attr("class", "legend")
-                .attr("x", margin.left + width + 30)
-                .attr("y", function (d, i) {
-                    return margin.top + 10 + i * 20
-                }) // 100 is where the first dot appears. 25 is the distance between dots
-                .text(d => d.column)
-                .style("alignment-baseline", "middle")
-                .style("fill", d => myColor(d.column));
-
-            dots.append("rect")
-                .attr("class", "legend_rect")
-                .attr("x", margin.left + width + 12)
-                .attr("y", margin.top - 8)
-                .attr("width", function (d) {
-                    if (selectedOption === "---")
-                        return 120;
-                    else if (selectedOption === "Education")
-                        return 308;
-                    else if (selectedOption === "Race")
-                        return 267;
-                    else
-                        return 173;
-                }).attr("height", function (d) {
-                if (selectedOption === "---")
-                    return 28;
-                else if (selectedOption === "Education" || selectedOption === "Race")
-                    return 87;
-                else
-                    return 46;
-            });
-
-            // Add the brushing
-            clip.append("g")
-                .attr("class", "brush")
-                .call(brush);
-
-            svg.call(hover, path, selectedData);
-        }
-
-        // When the button is changed, run the updateChart function
-        d3.select("#selectButton").on("change", function (d) {
-            // recover the option that has been chosen
-            var selectedOption = d3.select(this).property("value");
-            // run the updateChart function with this selected option
-            update(selectedOption);
-        });
-
-        function hover(svg, path, selectedData) {
-
-            if ("ontouchstart" in document) {
-                svg.style("-webkit-tap-highlight-color", "transparent")
-                    .on("touchmove", moved)
-                    .on("touchstart", entered)
-                    .on("touchend", left);
-            } else {
-                svg.on("mousemove", moved)
-                    .on("mouseenter", entered)
-                    .on("mouseleave", left);
-            }
-
-            const dot = svg.append("g")
-                .attr("display", "none");
-
-            dot.append("circle")
-                .attr("r", 2.5);
-
-            dot.append("text")
-                .attr("class", "line_label")
-                .attr("x", 4);
-
-            function moved() {
-                d3.event.preventDefault();
-                const mouse = d3.mouse(this);
-                const xm = x.invert(mouse[0]);
-                const ym = y.invert(mouse[1]);
-                const i1 = d3.bisectLeft(data.dates, xm, 1);
-                const i0 = i1 - 1;
-                const i = xm - data.dates[i0] > data.dates[i1] - xm ? i1 : i0;
-                const s = d3.least(selectedData, d => Math.abs(d.values[i].rate - ym));
-                path.attr("stroke", d => d === s ? myColor(s.column) : "#ddd").filter(d => d === s).raise();
-                dot.selectAll("text").remove();
-                dot.attr("transform", `translate(${x(data.dates[i])},${y(s.values[i].rate)})`)
-                    .style('fill', myColor(s.column));
-                dot.append("text")
-                    .attr("class", "dot_label")
-                    .attr("dy", "0em")
-                    .attr("x", 4)
-                    .attr("y", -18)
-                    .text(formatDate(data.dates[i]));
-                dot.append("text")
-                    .attr("class", "dot_label")
-                    .attr("dy", "1em")
-                    .attr("x", 4)
-                    .attr("y", -18)
-                    .text(s.values[i].rate);
-            }
-
-            function entered() {
-                path.style("mix-blend-mode", null).attr("stroke", "#ddd");
-                dot.attr("display", null);
-            }
-
-            function left() {
-                path.style("mix-blend-mode", "multiply").attr("stroke", d => {
-                    console.log(d.column);
-                    return myColor(d.column);
-                });
-                dot.attr("display", "none");
-            }
-        }
-
-    });
+    d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/unemployment/unemployment_rate_reformat.csv", createUnemploymentChart);
+    d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/employment/employment_stats_reformat.csv", createEmploymentChart);
+    d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/productivity/labor_productivity_reformat.csv", createLaborProductivityChart);
 </script>
+</body>
+</html>
