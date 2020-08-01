@@ -40,7 +40,7 @@ function createEmploymentChart(data) {
         .call(d3.axisLeft(y));
     yAxis.append("text")
         .attr("dy", ".75em")
-        .attr("x", 155)
+        .attr("x", 153)
         .attr("y", 45)
         .style("text-anchor", "end")
         .text("All Employees, Thousands");
@@ -302,10 +302,6 @@ function createEmploymentChart(data) {
 
         dot.append("circle")
             .attr("r", 2.5);
-
-        dot.append("text")
-            .attr("class", "line_label")
-            .attr("x", 4);
 
         function moved() {
             d3.event.preventDefault();

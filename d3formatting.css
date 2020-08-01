@@ -20,6 +20,13 @@
     font-size: 125%;
 }
 
+/* center axis contour */
+.center-axis path {
+    stroke: white;
+    stroke-width: 1.5;
+    shape-rendering: auto;
+}
+
 .line_label {
     font-family: Georgia;
     font-size: 35%;
@@ -27,7 +34,7 @@
 
 .dot_label {
     font-family: Georgia;
-    font-size: 35%;
+    font-size: 30%;
 }
 
 .legend {
@@ -109,4 +116,44 @@ label {
 .checkbox_label {
     font-size: 20px;
     font-family: sans-serif;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 45%;
+    height: 12px;
+    border-radius: 3px;
+    background: white;
+    outline: none;
+    opacity: 0.8;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #bbb;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #bbb;
+    cursor: pointer;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    top: 8px;
 }

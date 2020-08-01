@@ -60,10 +60,10 @@ function createUnemploymentChart(data) {
         .call(d3.axisLeft(y))
         .append("text")
         .attr("dy", ".75em")
-        .attr("x", 135)
+        .attr("x", 168)
         .attr("y", 45)
         .style("text-anchor", "end")
-        .text("Unemployment Rate %");
+        .text("Unemployment Rate, Percent");
 
     // Add a clipPath: everything out of this area won't be drawn.
     svg.append("defs")
@@ -381,10 +381,6 @@ function createUnemploymentChart(data) {
 
         dot.append("circle")
             .attr("r", 2.5);
-
-        dot.append("text")
-            .attr("class", "line_label")
-            .attr("x", 4);
 
         function moved() {
             d3.event.preventDefault();

@@ -15,23 +15,22 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <img src="https://static.slid.es/reveal/logo-v1/reveal-white-text.svg" alt="reveal.js logo"
-                 style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
-            <h4>How did COVID-19 impact U.S. Workers</h4>
-            <p>
-                <small>Created by Wenbo Ye</small>
+            <img src="https://news.sophos.com/wp-content/uploads/2020/03/shutterstock_1625951251.jpg"
+                 style="height: 450px; margin: 0 auto 2rem auto; background: transparent;">
+            <h3>How COVID-19 impacts U.S. Workers</h3>
+            <p style="font-size:32px;">
+            Data Source: <a href="https://www.bls.gov/">U.S. BUREAU OF LABOR STATISTICS</a>
             </p>
+            <small>Created by Wenbo Ye</small>
         </section>
         <section>
             <h4>U.S. Unemployment Statistics</h4>
             <p>
                 <!-- Initialize a select button -->
-                <small>By Category <select id="selectButton"></select></small>
+                <small>By Category <select id="selectButton" style="margin-left:20px"></select></small>
             </p>
-            <p>
-                <!-- Create a div where the graph will take place -->
+            <!-- Create a div where the graph will take place -->
             <div id="my_dataviz"></div>
-            </p>
         </section>
         <section>
             <h4>U.S. Employment Statistics</h4>
@@ -39,51 +38,61 @@
                 <!-- Initialize checkboxes -->
                 <small>By Industry
                     <input type="checkbox" id="checkbox1" class="checkbox" value="Total nonfarm"> <label
-                            for="checkbox1"></label><label class="checkbox_label"> Total nonfarm </label>
+                            for="checkbox1" style="margin-left:20px"></label><label class="checkbox_label"> Total nonfarm </label>
                     <input type="checkbox" id="checkbox2" class="checkbox" value="Construction"> <label
-                            for="checkbox2"></label><label class="checkbox_label"> Construction </label>
+                            for="checkbox2" style="margin-left:10px"></label><label class="checkbox_label"> Construction </label>
                     <input type="checkbox" id="checkbox3" class="checkbox" value="Education and health services"><label
-                            for="checkbox3"></label><label class="checkbox_label"> Education and health
-                        services </label>
+                            for="checkbox3" style="margin-left:10px"></label><label class="checkbox_label"> Education and health services </label> <br>
                     <input type="checkbox" id="checkbox4" class="checkbox" value="Financial activities"> <label
-                            for="checkbox4"></label><label class="checkbox_label"> Financial activities </label> <br>
+                            for="checkbox4" style="margin-left:10px"></label><label class="checkbox_label"> Financial activities </label>
                     <input type="checkbox" id="checkbox5" class="checkbox" value="Government"> <label
-                            for="checkbox5"></label><label class="checkbox_label"> Government </label>
+                            for="checkbox5" style="margin-left:10px"></label><label class="checkbox_label"> Government </label>
                     <input type="checkbox" id="checkbox6" class="checkbox" value="Information"> <label
-                            for="checkbox6"></label><label class="checkbox_label"> Information </label>
+                            for="checkbox6" style="margin-left:10px"></label><label class="checkbox_label"> Information </label>
                     <input type="checkbox" id="checkbox7" class="checkbox" value="Leisure and hospitality"> <label
-                            for="checkbox7"></label><label class="checkbox_label"> Leisure and hospitality </label>
+                            for="checkbox7" style="margin-left:10px"></label><label class="checkbox_label"> Leisure and hospitality </label>
                     <input type="checkbox" id="checkbox8" class="checkbox" value="Manufacturing"> <label
-                            for="checkbox8"></label><label class="checkbox_label"> Manufacturing </label>
+                            for="checkbox8" style="margin-left:10px"></label><label class="checkbox_label"> Manufacturing </label> <br>
                     <input type="checkbox" id="checkbox9" class="checkbox" value="Mining and logging"> <label
-                            for="checkbox9"></label><label class="checkbox_label"> Mining and logging </label> <br>
+                            for="checkbox9" style="margin-left:10px"></label><label class="checkbox_label"> Mining and logging </label>
                     <input type="checkbox" id="checkbox10" class="checkbox" value="Professional and business services">
-                    <label for="checkbox10"></label><label class="checkbox_label"> Professional and business
+                    <label for="checkbox10" style="margin-left:10px"></label><label class="checkbox_label"> Professional and business
                         services </label>
                     <input type="checkbox" id="checkbox11" class="checkbox" value="Other services"><label
-                            for="checkbox11"></label><label class="checkbox_label"> Other services</label>
+                            for="checkbox11" style="margin-left:10px"></label><label class="checkbox_label"> Other services</label>
                 </small>
             </p>
-            <p>
-                <!-- Create a div where the graph will take place -->
+            <!-- Create a div where the graph will take place -->
             <div id="my_dataviz1"></div>
-            </p>
         </section>
-        <section>Slide 4</section>
+        <section><h4>U.S. Major Sector Productivity Statistics</h4>
+            <p>
+                <input type="range" class="slider" min="0" max="2" value="0" style="margin-left:73px"><br>
+                <small>By Sector<span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                                         style="margin-left:5px">Business</label>
+                    <span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                             style="margin-left:5px">Nonfarm Business</label>
+                    <span class="dot" style="margin-left:20px"></span><label class="checkbox_label"
+                                                                             style="margin-left:5px">Manufacturing</label>
+                </small>
+            </p>
+            <!-- Create a div where the graph will take place -->
+            <div id="my_dataviz2"></div>
+        </section>
     </div>
 </div>
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 <!-- D3 formatting -->
 <link rel="stylesheet" href="d3formatting.css">
-<!-- D3 Array -->
-<script src="https://d3js.org/d3-array.v2.min.js"></script>
 <script src="dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
 <script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
 <script src="create-unemployment-stats-chart.js"></script>
 <script src="create-employment-stats-chart.js"></script>
+<script src="create-labor-productivity-chart.js"></script>
+<script src="https://d3js.org/d3-array.v2.min.js"></script>
 <script>
     // More info about initialization & config:
     // - https://revealjs.com/initialization/
@@ -110,12 +119,19 @@
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
+    var svg2 = d3.select("#my_dataviz2")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
     const parseDate = d3.timeParse("%b-%Y");
     const formatDate = d3.timeFormat("%b-%Y");
+    const parseDate1 = d3.timeParse("%m-%Y");
 
     //Read the data
     d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/unemployment/unemployment_rate_reformat.csv", createUnemploymentChart);
     d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/employment/employment_stats_reformat.csv", createEmploymentChart);
+    d3.csv("https://raw.githubusercontent.com/Catherineye20/Catherineye20.github.io/master/datasets/productivity/labor_productivity_reformat.csv", createLaborProductivityChart);
 </script>
 </body>
 </html>
