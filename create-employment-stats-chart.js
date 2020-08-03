@@ -93,14 +93,14 @@ function createEmploymentChart(data) {
         .data(selectedData)
         .enter()
         .append("path")
-        .attr("class", "lines")
+        .attr("class", "lines1")
         .attr("d", d => line(d.values))
         .attr("stroke", myColor("Total nonfarm"))
         .style("stroke-width", 2)
         .style("fill", "none");
 
     svg1.append("text")
-        .attr("class", "line_label")
+        .attr("class", "line_label1")
         .attr("transform", "translate(" + (x(data[data.length - 1].date) + 4) + ","
             + (y(data[data.length - 1]["Total nonfarm"]) + 5) + ")")
         .attr("x", 3)
@@ -114,14 +114,14 @@ function createEmploymentChart(data) {
 
     // Add the annotation
     svg1.append("line")
-        .attr("class", "annotation")
+        .attr("class", "annotation1")
         .attr("x1", x(parseDate("Apr-2020")))
         .attr("y1", margin.top + height)
         .attr("x2", x(parseDate("Apr-2020")))
         .attr("y2", margin.top);
 
     svg1.append("text")
-        .attr("class", "annotation_label")
+        .attr("class", "annotation_label1")
         .attr("x", x(parseDate("Apr-2020")) + 24)
         .attr("y", margin.top - 4)
         .text("Apr-2020");
@@ -131,7 +131,7 @@ function createEmploymentChart(data) {
         .data(data.columns.slice(1))
         .enter();
     dots.append("circle")
-        .attr("class", "dots")
+        .attr("class", "dots1")
         .attr("cx", margin.left + width + 246)
         .attr("cy", function (d, i) {
             return margin.top + 18 + i * 20
@@ -140,7 +140,7 @@ function createEmploymentChart(data) {
         .style("fill", d => myColor(d));
 
     dots.append("text")
-        .attr("class", "legend")
+        .attr("class", "legend1")
         .attr("x", margin.left + width + 254)
         .attr("y", function (d, i) {
             return margin.top + 20 + i * 20
@@ -150,7 +150,7 @@ function createEmploymentChart(data) {
         .style("fill", d => myColor(d));
 
     dots.append("rect")
-        .attr("class", "legend_rect")
+        .attr("class", "legend_rect1")
         .attr("x", margin.left + width + 235)
         .attr("y", margin.top + 2)
         .attr("width", 250)
@@ -170,9 +170,9 @@ function createEmploymentChart(data) {
         xAxis.transition().call(d3.axisBottom(x));
         path.transition()
             .attr("d", d => line(d.values));
-        d3.selectAll(".line_label").transition().style("opacity", 1);
-        d3.selectAll(".annotation").transition().style("opacity", 1);
-        d3.selectAll(".annotation_label").transition().style("opacity", 1);
+        d3.selectAll(".line_label1").transition().style("opacity", 1);
+        d3.selectAll(".annotation1").transition().style("opacity", 1);
+        d3.selectAll(".annotation_label1").transition().style("opacity", 1);
     }
 
     // If user double click, reinitialize the chart
@@ -198,17 +198,17 @@ function createEmploymentChart(data) {
         path.transition()
             .duration(1000)
             .attr("d", d => line(d.values));
-        d3.selectAll(".line_label").transition().duration(1000).style("opacity", 0);
-        d3.selectAll(".annotation").transition().duration(1000).style("opacity", 0);
-        d3.selectAll(".annotation_label").transition().duration(1000).style("opacity", 0);
+        d3.selectAll(".line_label1").transition().duration(1000).style("opacity", 0);
+        d3.selectAll(".annotation1").transition().duration(1000).style("opacity", 0);
+        d3.selectAll(".annotation_label1").transition().duration(1000).style("opacity", 0);
     }
 
     // A function that update the chart
     function update() {
 
         resetChart();
-        d3.selectAll(".lines").remove();
-        d3.selectAll(".line_label").remove();
+        d3.selectAll(".lines1").remove();
+        d3.selectAll(".line_label1").remove();
 
         var selectedChoices = [];
         d3.selectAll(".checkbox").each(function (d) {
@@ -249,7 +249,7 @@ function createEmploymentChart(data) {
             .data(selectedData)
             .enter()
             .append("path")
-            .attr("class", "lines")
+            .attr("class", "lines1")
             .attr("d", d => line(d.values))
             .attr("stroke", d => myColor(d.column))
             .style("stroke-width", 2)
@@ -259,7 +259,7 @@ function createEmploymentChart(data) {
             .data(selectedData)
             .enter();
         lines.append("text")
-            .attr("class", "line_label")
+            .attr("class", "line_label1")
             .datum(function (d) {
                 return {
                     column: d.column,
@@ -317,13 +317,13 @@ function createEmploymentChart(data) {
             dot.attr("transform", `translate(${x(data.dates[i])},${y(s.values[i].population)})`)
                 .style('fill', myColor(s.column));
             dot.append("text")
-                .attr("class", "dot_label")
+                .attr("class", "dot_label1")
                 .attr("dy", "0em")
                 .attr("x", 4)
                 .attr("y", -22)
                 .text(formatDate(data.dates[i]));
             dot.append("text")
-                .attr("class", "dot_label")
+                .attr("class", "dot_label1")
                 .attr("dy", "1em")
                 .attr("x", 4)
                 .attr("y", -22)

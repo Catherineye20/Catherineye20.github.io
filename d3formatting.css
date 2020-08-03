@@ -27,37 +27,37 @@
     shape-rendering: auto;
 }
 
-.line_label {
+.line_label, .line_label1 {
     font-family: Georgia;
     font-size: 35%;
 }
 
-.dot_label {
+.dot_label, .dot_label1 {
     font-family: Georgia;
     font-size: 30%;
 }
 
-.legend {
+.legend, .legend1 {
     font-family: Georgia;
     font-size: 35%;
     text-anchor: start;
 }
 
-.legend_rect {
+.legend_rect, .legend_rect1 {
     fill: white;
     stroke: white;
     stroke-width: 1;
     fill-opacity: 0;
 }
 
-.annotation_label {
+.annotation_label, .annotation_label1 {
     fill: white;
     font-family: Georgia;
     font-size: 27%;
     text-anchor: end;
 }
 
-.annotation {
+.annotation, .annotation1 {
     stroke: white;
     stroke-width: 1.5;
     stroke-dasharray: 5, 5;
